@@ -13,6 +13,7 @@ chatsakura是一个基于bloomz的多语言对话大模型，支持中文、英�
 | Finetuned Model | [chatSakura-3b](https://huggingface.co/chinoll/chatsakura-3b) | [chatSakura-3b-int8](https://huggingface.co/chinoll/chatsakura-3b-int8) | [chatSakura-3b-int4](https://huggingface.co/chinoll/chatsakura-3b-int4) |
 
 # 安装使用
+注意：int4和int8精度必须在GPU上运行，在Windows下尚未测试过是否可以运行。
 ```bash
 conda install pytorch==1.13.1 torchvision==0.14.1 torchaudio==0.13.1 pytorch-cuda=11.7 -c pytorch -c nvidia
 pip install -r requirements.txt
