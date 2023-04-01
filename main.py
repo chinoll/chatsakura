@@ -50,9 +50,10 @@ with gr.Blocks() as demo:
         clear = gr.Button("Clear")
     def user(user_message, history,topk,temp,topp):
         # print(user_message,history)
-        tokens = tokenizer.encode(f'{prompt}<human request>:{user_message}\n<bot response>:',return_tensors="pt").to(device)
+        text = f'{prompt}<human request>:{user_message}\n<bot response>:'
+        tokens = tokenizer.encode(text,return_tensors="pt").to(device)
         outputs = model.generate(tokens,top_k=topk,top_p=topp,do_sample=True,temperature=temp,max_length=2048)
-        bot_message = tokenizer.decode(outputs[0],skip_special_tokens=True)[len(tokens):]
+        bot_message = tokenizer.decode(outputs[0],skip_special_tokens=True)[len(text):]
         return "", history + [[user_message, bot_message]]
 
     def bot(history):
