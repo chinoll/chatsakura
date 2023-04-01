@@ -2,6 +2,7 @@ import gradio as gr
 from transformers import AutoModelForCausalLM, AutoTokenizer
 import platform
 import torch
+import requests
 prompt = "Below is an <human request> that describes a task. Write a response that appropriately completes the request.lets think step-by-step.\n\n"
 device = None
 def create_model():
@@ -24,12 +25,15 @@ def create_model():
         model_type = ''
     else:
         model_type = '-' + model_type
-    model = AutoModelForCausalLM.from_pretrained(f"chinoll/chatsakura-3b{model_type}",trust_remote_code==True)
+    model = AutoModelForCausalLM.from_pretrained(f"chinoll/chatsakura-3b{model_type}",trust_remote_code=True)
     model.to(device)
     tokenizer = AutoTokenizer.from_pretrained(f"chinoll/chatsakura-3b{model_type}")
     return model, tokenizer
 
+def send_feedback():
+    pass
 model,tokenizer = create_model()
+
 with gr.Blocks() as demo:
     chatbot = gr.Chatbot()
     chatbot.style(height=500)
