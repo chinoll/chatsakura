@@ -49,7 +49,7 @@ with gr.Blocks() as demo:
     def user(user_message, history,topk,temp,topp):
         # print(user_message,history)
         tokens = tokenizer.encode(f'{prompt}<human request>:{user_message}\n<bot response>:',return_tensors="pt").to(device)
-        outputs = model.generate(tokens,topk=topk,top_p=topp,do_sample=True,temperature=temp)
+        outputs = model.generate(tokens,top_k=topk,top_p=topp,do_sample=True,temperature=temp)
         bot_message = tokenizer.decode(outputs[0],skip_special_tokens=True)[len(tokens):]
         return "", history + [[user_message, bot_message]]
 
