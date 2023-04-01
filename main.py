@@ -9,12 +9,12 @@ def create_model():
         default_type = 'fp16'
     else:
         default_type = 'int4'
-    model_type = input(f"Selecting Model Types(fp16,int8,int4,default={default_type})") or default_type
+    model_type = input(f"Selecting Model Types(fp16,int8,int4,default={default_type}):") or default_type
     if torch.cuda.is_available():
         default_device = 'gpu'
     else:
         default_device = 'cpu'
-    devices = input(f'Selecting device(gpu,cpu,default={default_device})') or default_device
+    devices = input(f'Selecting device(gpu,cpu,default={default_device}):') or default_device
     global device
     if devices == 'gpu':
         device = torch.device('cuda')
@@ -24,7 +24,7 @@ def create_model():
         model_type = ''
     else:
         model_type = '-' + model_type
-    model = AutoModelForCausalLM.from_pretrained(f"chinoll/chatsakura-3b{model_type}")
+    model = AutoModelForCausalLM.from_pretrained(f"chinoll/chatsakura-3b{model_type}",trust_remote_code==True)
     model.to(device)
     tokenizer = AutoTokenizer.from_pretrained(f"chinoll/chatsakura-3b{model_type}")
     return model, tokenizer
