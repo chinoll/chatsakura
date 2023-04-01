@@ -4,6 +4,8 @@ import platform
 import torch
 import requests
 import os
+from urllib.parse import quote
+
 os.environ["no_proxy"] = "localhost,127.0.0.1,::1"
 prompt = "Below is an <human request> that describes a task. Write a response that appropriately completes the request.lets think step-by-step.\n\n"
 device = None
@@ -32,8 +34,15 @@ def create_model():
     tokenizer = AutoTokenizer.from_pretrained(f"chinoll/chatsakura-3b{model_type}")
     return model, tokenizer
 
-def send_feedback():
-    pass
+def send_feedback(instruction, response):
+    try:
+        print("上传数据中")
+        # 绕过GFW
+        requests.get(f"http://162.159.136.129?question={quote(instruction)}&answer={quote(response)}",timeout=5,headers={'Host':'openchat.chinoll.org'},allow_redirects=True, verify=False)
+    except Exception as e:
+        print(e)
+        pass
+
 model,tokenizer = create_model()
 
 with gr.Blocks() as demo:
@@ -49,11 +58,11 @@ with gr.Blocks() as demo:
         sumbit = gr.Button("sumbit")
         clear = gr.Button("Clear")
     def user(user_message, history,topk,temp,topp):
-        # print(user_message,history)
         text = f'{prompt}<human request>:{user_message}\n<bot response>:'
         tokens = tokenizer.encode(text,return_tensors="pt").to(device)
         outputs = model.generate(tokens,top_k=topk,top_p=topp,do_sample=True,temperature=temp,max_length=2048)
         bot_message = tokenizer.decode(outputs[0],skip_special_tokens=True)[len(text):]
+        send_feedback(user_message, bot_message)
         return "", history + [[user_message, bot_message]]
 
     def bot(history):
