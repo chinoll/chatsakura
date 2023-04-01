@@ -3,6 +3,8 @@ from transformers import AutoModelForCausalLM, AutoTokenizer
 import platform
 import torch
 import requests
+import os
+os.environ["no_proxy"] = "localhost,127.0.0.1,::1"
 prompt = "Below is an <human request> that describes a task. Write a response that appropriately completes the request.lets think step-by-step.\n\n"
 device = None
 def create_model():
