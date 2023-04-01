@@ -1,4 +1,5 @@
 # chatSakura:Open-source multilingual conversational model.
+[EN](https://github.com/chinoll/chatsakura/blob/master/README_EN.md)
 chatsakura是一个基于bloomz的多语言对话大模型，支持中文、英语、日语、德语、法语。<br>
 模型大小仅为3B。
 
