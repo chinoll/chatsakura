@@ -18,7 +18,7 @@ with gr.Blocks() as demo:
         topp = gr.Slider(0, 1, value=0.95, label="TopP", info="TopP sample")
 
     with gr.Row():
-        sumbit = gr.Button("sumbit")
+        sumbit = gr.Button("Submit")
         clear = gr.Button("Clear")
     def user(user_message, history,topk,temp,topp):
         text = f'{prompt}<human request>:{user_message}\n<bot response>:'
