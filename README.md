@@ -20,3 +20,8 @@ conda install pytorch==1.13.1 torchvision==0.14.1 torchaudio==0.13.1 pytorch-cud
 pip install -r requirements.txt
 python main.py
 ```
+
+# 硬件需求
+| Model precision| FP16 | int8 | int4 |
+| ----- | ----- | ----- | ----- |
+| Finetuned Model | 10G | 6G | 4G(推荐6G) |

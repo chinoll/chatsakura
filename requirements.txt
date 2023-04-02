@@ -1,4 +1,5 @@
 transformers
 gradio
 torch
-sentencepiece
+fastapi
+uvicorn
